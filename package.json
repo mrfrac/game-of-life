@@ -10,7 +10,10 @@
     "rollup": "^1.21.4"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && uglifyjs dist/*.umd.js --compress --mangle",
     "dev": "rollup -c --watch"
+  },
+  "devDependencies": {
+    "uglify-js": "^3.6.0"
   }
 }

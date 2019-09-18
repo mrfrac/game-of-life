@@ -21,18 +21,20 @@
     <button onclick="play()">Play</button><br/>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <script>
-            const game = new GameOfLife.Game("gameCanvas", 200, 200);
+            const game = new GameOfLife.Game("gameCanvas", 400, 400);
             let intervalId = undefined;
 
             function play() {
-                if (!intervalId) {
+                game.calcGeneration();
+                window.requestAnimationFrame(play)
+                /* if (!intervalId) {
                     intervalId = setInterval(()=> {
                         game.play();
-                    }, 200);
+                    }, 100);
                 } else {
                     clearInterval(intervalId)
                     intervalId = undefined;
-                }
+                } */
             }
     </script>
 </body>
