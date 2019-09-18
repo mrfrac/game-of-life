@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game of Live</title>
+    <script src="./main.js"></script>
+    <style>
+    canvas {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:-1;
+    }
+    </style>
+</head>
+<body>
+    <button onclick="play()">Play</button><br/>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <script>
+            const game = new Game("gameCanvas", 200, 200);
+            let intervalId = undefined;
+
+            function play() {
+                if (!intervalId) {
+                    intervalId = setInterval(()=> {
+                        game.play();
+                    }, 200);
+                } else {
+                    clearInterval(intervalId)
+                    intervalId = undefined;
+                }
+            }
+    </script>
+</body>
+</html>
