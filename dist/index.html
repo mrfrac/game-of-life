@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game of Live</title>
-    <script src="./main.js"></script>
+    <script src="./game-of-life.umd.js"></script>
     <style>
     canvas {
         position:absolute;
@@ -21,7 +21,7 @@
     <button onclick="play()">Play</button><br/>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <script>
-            const game = new Game("gameCanvas", 200, 200);
+            const game = new GameOfLife.Game("gameCanvas", 200, 200);
             let intervalId = undefined;
 
             function play() {

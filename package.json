@@ -1,0 +1,16 @@
+{
+  "name": "game-of-life",
+  "version": "1.0.0",
+  "main": "dist/game-of-life.cjs.js",
+  "module": "dist/game-of-life.esm.js",
+  "author": "mrfrac <fracturer@gmail.com>",
+  "browser": "dist/game-of-life.umd.js",
+  "license": "MIT",
+  "dependencies": {
+    "rollup": "^1.21.4"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c --watch"
+  }
+}
