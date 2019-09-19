@@ -2,6 +2,6 @@
 
 # Conway's Game of Life
 
-Simple realisation of Game of Life
+Simple realization of Game of Life
 
 Documentation will come later. Probably ;)
