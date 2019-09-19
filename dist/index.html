@@ -21,7 +21,7 @@
     <button onclick="play()">Play</button><br/>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <script>
-            const game = new GameOfLife.Game("gameCanvas", 400, 400);
+            const game = new GameOfLife.Game("gameCanvas", {cols:400, rows: 400, color: "gray"});
             let intervalId = undefined;
 
             function play() {

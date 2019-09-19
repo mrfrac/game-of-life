@@ -1,81 +1,78 @@
-class Game {
-    constructor(elementId, cols, rows) {
-        this.cols = cols;
-        this.rows = rows;
-        this.canvas = new Canvas(elementId, cols, rows);
-
-        this.data = [];
+var Game = /** @class */ (function () {
+    function Game(elementId, options) {
+        this.options = options;
+        this.canvas = new Canvas(elementId, this.options);
+        this.matrix = [];
         this.randomize();
-
-        this.canvas.draw(this.data);
+        this.canvas.draw(this.matrix);
     }
-
-    randomize() {
-        for (let i = 0; i < this.cols; i++) {
-            for (let j = 0; j < this.rows; j++) {
-                if (!this.data[i]) this.data[i] = Array(this.cols);
-                if (!this.data[i][j]) this.data[i][j] = Array(this.rows);
-                this.data[i][j] = Math.random() >= 0.5 ? 1 : 0;
+    Game.prototype.calcGeneration = function () {
+        var newGeneration = JSON.parse(JSON.stringify(this.matrix));
+        for (var i = 0; i < this.options.cols; i++) {
+            for (var j = 0; j < this.options.rows; j++) {
+                var n = this.calcNeighbours(i, j);
+                if (!this.matrix[i][j] && n === 3)
+                    newGeneration[i][j] = 1;
+                if (this.matrix[i][j] && (n < 2 || n > 3))
+                    newGeneration[i][j] = 0;
             }
         }
-    }
-
-    calcGeneration() {
-        const data = JSON.parse(JSON.stringify(this.data));
-
-        for (let i = 0; i < this.cols; i++) {
-            for (let j = 0; j < this.rows; j++) {
-                const n = this.calcNeighbours(i, j);
-                if (!this.data[i][j] && n === 3) data[i][j] = 1;
-                if (this.data[i][j] && (n < 2 || n > 3)) data[i][j] = 0;
+        this.matrix = newGeneration;
+        this.canvas.draw(newGeneration);
+    };
+    Game.prototype.randomize = function () {
+        for (var i = 0; i < this.options.cols; i++) {
+            for (var j = 0; j < this.options.rows; j++) {
+                if (!this.matrix[i])
+                    this.matrix[i] = Array(this.options.cols);
+                //if (!this.matrix[i][j]) this.matrix[i][j] = 
+                this.matrix[i][j] = Math.random() >= 0.5 ? 1 : 0;
             }
         }
-        this.data = data;
-
-        this.canvas.draw(data);
-    }
-
-    calcNeighbours(x, y) {
-        const val = (xx, yy) => {
-            if (xx < 0) xx = this.cols - 1;
-            if (xx >= this.cols) xx = 0;
-            if (yy < 0) yy = this.rows - 1;
-            if (yy >= this.rows) yy = 0;
-
-            return this.data[xx][yy];
+    };
+    Game.prototype.calcNeighbours = function (x, y) {
+        var _this = this;
+        var val = function (xx, yy) {
+            if (xx < 0)
+                xx = _this.options.cols - 1;
+            if (xx >= _this.options.cols)
+                xx = 0;
+            if (yy < 0)
+                yy = _this.options.rows - 1;
+            if (yy >= _this.options.rows)
+                yy = 0;
+            return _this.matrix[xx][yy];
         };
-
         return [val(x - 1, y - 1), val(x, y - 1), val(x + 1, y - 1),
-        val(x - 1, y), val(x + 1, y),
-        val(x - 1, y + 1), val(x, y + 1), val(x + 1, y + 1)].reduce((a, b) => a + b, 0);
-    }
-}
-
-class Canvas {
-    constructor(elementId, cols, rows) {
-        this.elementId = elementId;
-        this.cols = cols;
-        this.rows = rows;
-        this.canvas = document.getElementById(this.elementId);
+            val(x - 1, y), val(x + 1, y),
+            val(x - 1, y + 1), val(x, y + 1), val(x + 1, y + 1)].reduce(function (a, b) { return a + b; }, 0);
+    };
+    return Game;
+}());
+var Canvas = /** @class */ (function () {
+    function Canvas(elementId, options) {
+        this.canvas = document.getElementById(elementId);
+        this.options = options;
         this.ctx = this.canvas.getContext("2d");
     }
-
-    draw(data) {
-        const canvasWidth = parseInt(this.canvas.getAttribute("width"), 10);
-        const canvasHeight = parseInt(this.canvas.getAttribute("height"), 10);
-        
+    Canvas.prototype.draw = function (data) {
+        if (!this.ctx) {
+            throw new Error("Can't get 2d context of canvas");
+        }
+        var canvasWidth = parseInt(this.canvas.getAttribute("width") || "100", 10);
+        var canvasHeight = parseInt(this.canvas.getAttribute("height") || "100", 10);
         this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-        const cellWidth = parseInt(canvasWidth / this.cols, 10);
-        const cellHeight = parseInt(canvasHeight / this.rows, 10);
-
-        this.ctx.strokeStyle = this.ctx.fillStyle = "#d0b3d1";
-        for (let i = 0; i < this.cols; i++) {
-            for (let j = 0; j < this.rows; j++) {
-                if (data[i][j]) this.ctx.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+        var cellWidth = canvasWidth / this.options.cols;
+        var cellHeight = canvasHeight / this.options.rows;
+        this.ctx.strokeStyle = this.ctx.fillStyle = this.options.color ? this.options.color : "#d0b3d1";
+        for (var i = 0; i < this.options.cols; i++) {
+            for (var j = 0; j < this.options.rows; j++) {
+                if (data[i][j])
+                    this.ctx.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
             }
         }
-    }
-}
+    };
+    return Canvas;
+}());
 
 export { Game };

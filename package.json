@@ -7,13 +7,16 @@
   "browser": "dist/game-of-life.umd.js",
   "license": "MIT",
   "dependencies": {
-    "rollup": "^1.21.4"
+    "add": "^2.0.6",
+    "rollup": "^1.21.4",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.3",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.3",
+    "yarn": "^1.17.3"
   },
   "scripts": {
-    "build": "rollup -c && uglifyjs dist/*.umd.js --compress --mangle",
+    "build": "rollup -c ",
     "dev": "rollup -c --watch"
-  },
-  "devDependencies": {
-    "uglify-js": "^3.6.0"
   }
 }

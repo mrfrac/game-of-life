@@ -1,20 +1,28 @@
 import pkg from './package.json';
+import typescript from "rollup-plugin-typescript";
+import { uglify } from "rollup-plugin-uglify";
 
 export default [
     {
-        input: 'src/index.js',
+        input: 'src/index.ts',
         output: {
             name: 'GameOfLife',
             file: pkg.browser,
             format: 'umd'
         },
-        plugins: []
+        plugins: [
+            typescript(),
+            uglify(),
+        ],
     }, {
-        input: 'src/index.js',
+        input: 'src/index.ts',
         external: ['ms'],
         output: [
-            { file: pkg.main, format: 'cjs' },
-            { file: pkg.module, format: 'es' }
-        ]
+            { file: pkg.main, format: 'cjs'},
+            { file: pkg.module, format: 'es', }
+        ],
+        plugins: [
+            typescript()
+        ],
     }
 ];
