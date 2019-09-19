@@ -5,19 +5,25 @@
   "module": "dist/game-of-life.esm.js",
   "author": "mrfrac <fracturer@gmail.com>",
   "browser": "dist/game-of-life.umd.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "dependencies": {
     "add": "^2.0.6",
+    "rimraf": "^3.0.0",
     "rollup": "^1.21.4",
-    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.24.2",
     "rollup-plugin-uglify": "^6.0.3",
     "tslib": "^1.10.0",
     "typescript": "^3.6.3",
     "yarn": "^1.17.3"
   },
   "scripts": {
-    "build": "rollup -c ",
-    "dev": "rollup -c --watch"
+    "build": "npm run clean && rollup -c ",
+    "watch": "rollup -cw",
+    "clean": "rimraf dist/*.ts dist/*.js"
   },
   "keywords": [
     "Conway",
