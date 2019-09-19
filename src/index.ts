@@ -45,7 +45,7 @@ export class Game {
     }
 
     private calcNeighbours(x: number, y: number): number {
-        const val = (xx: number, yy: number) => {
+        const getCellVall = (xx: number, yy: number): number => {
             if (xx < 0) xx = this.options.cols - 1;
             if (xx >= this.options.cols) xx = 0;
             if (yy < 0) yy = this.options.rows - 1;
@@ -54,9 +54,11 @@ export class Game {
             return this.matrix[xx][yy];
         };
 
-        return [val(x - 1, y - 1), val(x, y - 1), val(x + 1, y - 1),
-        val(x - 1, y), val(x + 1, y),
-        val(x - 1, y + 1), val(x, y + 1), val(x + 1, y + 1)].reduce((a, b) => a + b, 0);
+        return [
+            getCellVall(x - 1, y - 1), getCellVall(x, y - 1), getCellVall(x + 1, y - 1),
+            getCellVall(x - 1, y), getCellVall(x + 1, y),
+            getCellVall(x - 1, y + 1), getCellVall(x, y + 1), getCellVall(x + 1, y + 1)
+        ].reduce((a, b) => a + b, 0);
     }
 }
 
