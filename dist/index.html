@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Game of Live</title>
-    <script src="./game-of-life.umd.js"></script>
-    <style>
-    canvas {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        z-index:-1;
-    }
-    </style>
-</head>
-<body>
-    <button onclick="play()">Play</button><br/>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <script>
-            const game = new GameOfLife.Game("gameCanvas", {cols:400, rows: 400, color: "gray"});
-            let intervalId = undefined;
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Game of Live</title>
+        <script src="./game-of-life.umd.js"></script>
+        <style>
+            canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <button onclick="play()">Play</button>
+        <button onclick="pause()">Pause</button>
+        <button onclick="reset()">Reset</button>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <script>
+            const params = {
+                cols: 400,
+                rows: 400,
+                color: "gray"
+            };
+
+            let game = new GameOfLife.Game("gameCanvas", params);
+            let gameStarted = undefined;
 
             function play() {
-                game.calcGeneration();
-                window.requestAnimationFrame(play)
-                /* if (!intervalId) {
-                    intervalId = setInterval(()=> {
-                        game.play();
-                    }, 100);
-                } else {
-                    clearInterval(intervalId)
-                    intervalId = undefined;
-                } */
+                if (!gameStarted) gameStarted = 1;
+                playGame();
             }
-    </script>
-</body>
+
+            function playGame() {
+                if (!gameStarted) return;
+                game.calcGeneration();
+                window.requestAnimationFrame(playGame)
+            }
+
+            function reset() {
+                pause();
+                params.color = '#' + (function lol(m, s, c) {
+                    return s[m.floor(m.random() * s.length)] + (c && lol(m, s, c - 1));
+                })(Math, '0123456789ABCDEF', 4);
+                game = new GameOfLife.Game("gameCanvas", params);
+            }
+
+            function pause() {
+                gameStarted = undefined;
+            }
+        </script>
+    </body>
+
 </html>
