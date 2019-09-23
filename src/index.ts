@@ -1,4 +1,10 @@
-export interface IGameOptions {
+export type CellType = 0 | 1;
+
+export interface IGameOptions extends ICanvasOptions {
+    seed?: Array<CellType[]>
+}
+
+export interface ICanvasOptions {
     rows: number;
     cols: number;
     color?: string;
@@ -7,20 +13,28 @@ export interface IGameOptions {
 export class Game {
     private options: IGameOptions;
     private canvas: Canvas;
-    private matrix: number[][];
+    private matrix: Array<CellType[]>;
 
     public constructor(elementId: string, options: IGameOptions) {
         this.options = options;
-        this.canvas = new Canvas(elementId, this.options);
-        this.matrix = [];
+        this.canvas = new Canvas(elementId, {
+            rows: this.options.rows,
+            cols: this.options.cols,
+            color: this.options.color,
+        });
 
-        this.randomize();
+        if (this.options.seed) {
+            this.matrix = this.options.seed;
+        } else {
+            this.matrix = [];
+            this.randomize();
+        }
 
         this.canvas.draw(this.matrix);
     }
 
-    calcGeneration(): void {
-        const newGeneration: number[][] = JSON.parse(JSON.stringify(this.matrix));
+    public liveOut(): Array<CellType[]> {
+        const newGeneration: Array<CellType[]> = JSON.parse(JSON.stringify(this.matrix));
 
         for (let i = 0; i < this.options.cols; i++) {
             for (let j = 0; j < this.options.rows; j++) {
@@ -32,13 +46,13 @@ export class Game {
 
         this.matrix = newGeneration;
         this.canvas.draw(newGeneration)
+        return newGeneration;
     }
 
     private randomize(): void {
         for (let i = 0; i < this.options.cols; i++) {
             for (let j = 0; j < this.options.rows; j++) {
                 if (!this.matrix[i]) this.matrix[i] = Array(this.options.cols);
-                //if (!this.matrix[i][j]) this.matrix[i][j] = 
                 this.matrix[i][j] = Math.random() >= 0.5 ? 1 : 0;
             }
         }
@@ -64,10 +78,10 @@ export class Game {
 
 class Canvas {
     private canvas: HTMLCanvasElement;
-    private options: IGameOptions;
+    private options: ICanvasOptions;
     private ctx: CanvasRenderingContext2D | null;
 
-    public constructor(elementId: string, options: IGameOptions) {
+    public constructor(elementId: string, options: ICanvasOptions) {
         this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
         this.options = options;
         this.ctx = this.canvas.getContext("2d");

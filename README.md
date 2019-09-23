@@ -21,7 +21,7 @@ Somewhere in `html>head`:
 <script src="./game-of-life.umd.js"></script>
 ```
 
-Somewhere in JS code`:
+Somewhere in JS code:
 ```js
 const params = {
     cols: 400, // matrix size: 400x400
@@ -39,7 +39,7 @@ function play() {
 
 function playGame() {
     if (!gameStarted) return;
-    game.calcGeneration();
+    game.liveOut();
     window.requestAnimationFrame(playGame)
 }
 

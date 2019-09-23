@@ -48,7 +48,7 @@
 
             function playGame() {
                 if (!gameStarted) return;
-                game.calcGeneration();
+                game.liveOut();
                 window.requestAnimationFrame(playGame)
             }
 

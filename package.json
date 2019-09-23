@@ -1,6 +1,6 @@
 {
   "name": "game-of-life",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/game-of-life.cjs.js",
   "module": "dist/game-of-life.esm.js",
   "author": "mrfrac <fracturer@gmail.com>",

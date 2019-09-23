@@ -1,12 +1,21 @@
 var Game = /** @class */ (function () {
     function Game(elementId, options) {
         this.options = options;
-        this.canvas = new Canvas(elementId, this.options);
-        this.matrix = [];
-        this.randomize();
+        this.canvas = new Canvas(elementId, {
+            rows: this.options.rows,
+            cols: this.options.cols,
+            color: this.options.color,
+        });
+        if (this.options.seed) {
+            this.matrix = this.options.seed;
+        }
+        else {
+            this.matrix = [];
+            this.randomize();
+        }
         this.canvas.draw(this.matrix);
     }
-    Game.prototype.calcGeneration = function () {
+    Game.prototype.liveOut = function () {
         var newGeneration = JSON.parse(JSON.stringify(this.matrix));
         for (var i = 0; i < this.options.cols; i++) {
             for (var j = 0; j < this.options.rows; j++) {
@@ -19,13 +28,13 @@ var Game = /** @class */ (function () {
         }
         this.matrix = newGeneration;
         this.canvas.draw(newGeneration);
+        return newGeneration;
     };
     Game.prototype.randomize = function () {
         for (var i = 0; i < this.options.cols; i++) {
             for (var j = 0; j < this.options.rows; j++) {
                 if (!this.matrix[i])
                     this.matrix[i] = Array(this.options.cols);
-                //if (!this.matrix[i][j]) this.matrix[i][j] = 
                 this.matrix[i][j] = Math.random() >= 0.5 ? 1 : 0;
             }
         }
