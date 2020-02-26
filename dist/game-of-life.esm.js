@@ -41,7 +41,7 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.calcNeighbours = function (x, y) {
         var _this = this;
-        var getCellVall = function (xx, yy) {
+        var getCellValue = function (xx, yy) {
             if (xx < 0)
                 xx = _this.options.cols - 1;
             if (xx >= _this.options.cols)
@@ -53,9 +53,9 @@ var Game = /** @class */ (function () {
             return _this.matrix[xx][yy];
         };
         return [
-            getCellVall(x - 1, y - 1), getCellVall(x, y - 1), getCellVall(x + 1, y - 1),
-            getCellVall(x - 1, y), getCellVall(x + 1, y),
-            getCellVall(x - 1, y + 1), getCellVall(x, y + 1), getCellVall(x + 1, y + 1)
+            getCellValue(x - 1, y - 1), getCellValue(x, y - 1), getCellValue(x + 1, y - 1),
+            getCellValue(x - 1, y), getCellValue(x + 1, y),
+            getCellValue(x - 1, y + 1), getCellValue(x, y + 1), getCellValue(x + 1, y + 1)
         ].reduce(function (a, b) { return a + b; }, 0);
     };
     return Game;
