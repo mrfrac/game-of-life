@@ -13,7 +13,7 @@
   "dependencies": {
     "add": "^2.0.6",
     "rimraf": "^3.0.2",
-    "rollup": "^1.31.1",
+    "rollup": "^1.32.1",
     "rollup-plugin-typescript2": "^0.27.3",
     "rollup-plugin-uglify": "^6.0.4",
     "tslib": "^1.11.0",
