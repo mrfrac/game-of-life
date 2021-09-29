@@ -345,6 +345,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-yarn@^1.22.10:
-  version "1.22.10"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.10.tgz#c99daa06257c80f8fa2c3f1490724e394c26b18c"
+yarn@^1.22.14:
+  version "1.22.14"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.14.tgz#f77caaa9e86b19e2401c2745a45d20623368acf7"
