@@ -18,7 +18,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "tslib": "^2.3.1",
     "typescript": "^4.4.4",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.17"
   },
   "scripts": {
     "build": "npm run clean && rollup -c ",
