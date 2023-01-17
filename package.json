@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "add": "^2.0.6",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.1.0",
     "rollup": "^1.32.1",
     "rollup-plugin-typescript2": "^0.33.0",
     "rollup-plugin-uglify": "^6.0.4",
